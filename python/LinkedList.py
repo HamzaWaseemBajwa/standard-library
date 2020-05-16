@@ -189,22 +189,94 @@ class LinkedList:
         self._size += 1
 
     def pop_front(self):
-        """Removes and returns the values at the front of the list"""
-        pass
+        """
+        Removes and returns the values at the front of the list
+        Returns None if empty
+
+        """
+        if (self._size == 0):
+            return None
+
+        output_value = self._head.value
+
+        self._head = self._head.next
+        self._size -= 1
+
+        # Edge case, list is now empty
+        if (self._size == 0):
+            self._tail = None
+
+        return output_value
 
     def pop_back(self):
-        """Removes and returns the values at the end of the list"""
-        pass
+        """
+        Removes and returns the values at the end of the list
+        Returns None if empty
+
+        """
+        if (self._size == 0):
+            return None
+
+        # Edge case, list has only one element
+        # Behave same as pop_front()
+        if (self._size == 1):
+            return self.pop_front()
+
+        output_value = self._tail.value
+
+        self._tail = self._tail.prev
+        self._size -= 1
+
+        return output_value
 
     def remove(self, index=0):
-        """Removes and retuns the value at the given index"""
-        pass
+        """
+        Removes and returns the value at the given index
+
+        Parameters
+        ----------
+        index : int
+            list index of the node to be removed
+
+        Raises
+        -------
+        RangeError
+            If given index is less than 0 or
+            greater than or equal to the list size
+
+        """
+        # Error case: Index out of acceptable range
+        if index < 0 or index >= self._size:
+            raise RangeError("index out of range.")
+        
+        # Edge case: Remove from front of list
+        # Behave list pop_front()
+        if (index == 0):
+            return self.pop_front()
+
+        # Edge case: Remove from end of list
+        # Behave list pop_back()
+        if (index == self._size - 1):
+            return self.pop_back()
+
+        i = 1
+        current_node = self._head.next
+        
+        while(i < index):
+            current_node = current_node.next
+            i += 1
+
+        current_node.prev.next = current_node.next
+        current_node.next.prev = current_node.prev
+
+        return current_node.value
+
 
     def peek_front(self):
         """
         Retuns the value stored by the node at the front of the list
         Returns None if list is empty
-        
+
         """
 
         if (self._size == 0):
@@ -224,12 +296,66 @@ class LinkedList:
         return self._tail.value
     
     def get(self, index=0):
-        """Gets the value at the given index in the list"""
-        pass
+        """
+        Get the value of the node at the given index
+        
+        Parameters
+        ----------
+        index : int
+            list index of the node
+
+        Raises
+        -------
+        RangeError
+            If given index is less than 0 or
+            greater than or equal to the list size
+
+        """
+
+        # Error case: Index out of acceptable range
+        if index < 0 or index >= self._size:
+            raise RangeError("index out of range.")
+
+        i = 0
+        current_node = self._head
+        
+        while(i < index):
+            current_node = current_node.next
+            i += 1
+        
+        return current_node.value
 
     def set(self, value, index=0):
-        """Sets the node at the given index to the passed value"""
-        pass
+        """
+        Sets the node at the given index to the passed value
+        
+        Parameters
+        ----------
+        value : (any type)
+            the new value of the node to be set
+        index : int
+            list index of the node to be set
+
+        Raises
+        -------
+        RangeError
+            If given index is less than 0 or
+            greater than or equal to the list size
+
+        """
+
+        # Error case: Index out of acceptable range
+        if index < 0 or index >= self._size:
+            raise RangeError("index out of range.")
+
+        i = 0
+        current_node = self._head
+        
+        while(i < index):
+            current_node = current_node.next
+            i += 1
+        
+        current_node.value = value
 
     def size(self):
         """
@@ -248,5 +374,17 @@ class LinkedList:
         self._size = 0
 
     def toList(self):
-        """Returns the elements as a standard python List"""
-        pass
+        """
+        Returns the list values as a standard python List
+
+        """
+        if (self._size == 0):
+            return []
+
+        output_list = []
+        current_node = self._head
+
+        while(current_node != None):
+            output_list.append(current_node.value)
+
+        return output_list
