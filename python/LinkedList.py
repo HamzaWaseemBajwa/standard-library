@@ -1,3 +1,5 @@
+from Exceptions import RangeError
+
 class LinkedList:
     """
     Linked list implementation of the List interface
@@ -140,3 +142,111 @@ class LinkedList:
         self._tail.next = new_node
         self._tail = new_node
         self._size += 1
+
+    def insert(self, value, index=0):
+        """
+        Creates a new node at the specified index in the list
+        and assigns to it the passed value 
+        Increments the list size by 1 
+    
+        Parameters
+        ----------
+        value : the value to be added
+
+        Raises
+        -------
+        RangeError
+            If given index is less than 0 or
+            greater than the list size
+
+        """
+        # Error case: Index out of acceptable range
+        if index < 0 or index > self._size:
+            raise RangeError("index out of range.")
+
+        # Edge case 1: index == 0
+        # Behave like push_front()
+        if index == 0:
+            self.push_front(value)
+
+        # Edge case 2: index == size
+        # Behave like push_back()
+        if index == self._size:
+            self.push_back(value)
+
+        new_node = self.Node(value)
+        i = 1
+        current_node = self._head.next
+        
+        while(i < index):
+            current_node = current_node.next
+            i += 1
+
+        new_node.next = current_node
+        new_node.prev = current_node.prev
+        current_node.prev.next = new_node
+        current_node.prev = new_node
+        self._size += 1
+
+    def pop_front(self):
+        """Removes and returns the values at the front of the list"""
+        pass
+
+    def pop_back(self):
+        """Removes and returns the values at the end of the list"""
+        pass
+
+    def remove(self, index=0):
+        """Removes and retuns the value at the given index"""
+        pass
+
+    def peek_front(self):
+        """
+        Retuns the value stored by the node at the front of the list
+        Returns None if list is empty
+        
+        """
+
+        if (self._size == 0):
+            return None
+        
+        return self._head.value
+
+    def peek_back(self):
+        """
+        Retuns the value stored by the node at the end of the list
+        Returns None if list is empty
+        
+        """
+        if (self._size == 0):
+            return None
+        
+        return self._tail.value
+    
+    def get(self, index=0):
+        """Gets the value at the given index in the list"""
+        pass
+
+    def set(self, value, index=0):
+        """Sets the node at the given index to the passed value"""
+        pass
+
+    def size(self):
+        """
+        Gets the size of the list
+        
+        """
+        return self._size
+
+    def clear(self):
+        """
+        Removes all nodes in the list
+
+        """
+        self._head = None
+        self._tail = None
+        self._size = 0
+
+    def toList(self):
+        """Returns the elements as a standard python List"""
+        pass
