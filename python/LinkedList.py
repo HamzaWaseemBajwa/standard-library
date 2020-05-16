@@ -56,6 +56,87 @@ class LinkedList:
 
 
     """
+
+    # Begin Node implementation
+
+    class Node:
+        """ 
+        Node class for Linked List
+
+        ...
+
+        Attributes
+        ----------
+        next : Node
+            ptr to next node in list
+        prev : Node
+            ptr to previous node in list
+        value : (any type)
+            value stored by the node
+        
+        """
+
+        def __init(self, value=None):
+            self.value = value
+            self.next = None
+            self.prev = None
+
+    # End Node implementation
+
     def __init__(self):
-        self.head = None
-        self.tail = None       
+        """
+        Parameters
+        ----------
+        No parameters
+
+        """
+
+        self._head = None
+        self._tail = None
+        self._size = 0
+
+    def push_front(self, value):
+        """
+        Creates a new node at the front of the list
+        and assigns to it the passed value
+        Increments the list size by 1 
+
+        Parameters
+        ----------
+        value : the value to be added
+
+        """
+        new_node = self.Node(value)
+
+        # Edge Case : List is empty
+        if self._size == 0:          
+            self._tail = new_node
+
+        new_node.next = self._head
+        self._head.prev = new_node
+        self._head = new_node
+        self._size += 1
+        
+    def push_back(self, value):
+        """
+        Creates a new node at the end of the list
+        and assigns to it the passed value 
+        Increments the list size by 1 
+        
+        Parameters
+        ----------
+        value : the value to be added
+
+        """
+
+        # Edge Case : List is empty
+        # Behave just like push_front()
+        if self._size == 0:
+            self.push_front(value)
+            return
+
+        new_node = self.Node(value)
+        new_node.prev = self._tail
+        self._tail.next = new_node
+        self._tail = new_node
+        self._size += 1
