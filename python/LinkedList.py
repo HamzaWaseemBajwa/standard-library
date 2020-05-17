@@ -1,5 +1,6 @@
 from Exceptions import RangeError
 
+
 class LinkedList:
     """
     Linked list implementation of the List interface
@@ -78,7 +79,7 @@ class LinkedList:
         
         """
 
-        def __init(self, value=None):
+        def __init__(self, value=None):
             self.value = value
             self.next = None
             self.prev = None
@@ -97,6 +98,27 @@ class LinkedList:
         self._tail = None
         self._size = 0
 
+    def __str__(self):
+        """
+        Returns a string representation of the linked list
+
+        """
+        _str = ""
+        current_node = self._head
+        while(current_node != None):
+            _str += str(current_node.value)
+            _str += " -> "
+            current_node = current_node.next
+        _str += "None"
+        return _str
+
+    def __repr__(self):
+        """
+        See __str__()
+
+        """
+        return self.__str__()
+
     def push_front(self, value):
         """
         Creates a new node at the front of the list
@@ -111,14 +133,17 @@ class LinkedList:
         new_node = self.Node(value)
 
         # Edge Case : List is empty
-        if self._size == 0:          
+        if self._size == 0:
             self._tail = new_node
+            self._head = new_node
+            self._size += 1
+            return
 
         new_node.next = self._head
         self._head.prev = new_node
         self._head = new_node
         self._size += 1
-        
+
     def push_back(self, value):
         """
         Creates a new node at the end of the list
@@ -168,16 +193,18 @@ class LinkedList:
         # Behave like push_front()
         if index == 0:
             self.push_front(value)
+            return
 
         # Edge case 2: index == size
         # Behave like push_back()
         if index == self._size:
             self.push_back(value)
+            return
 
         new_node = self.Node(value)
         i = 1
         current_node = self._head.next
-        
+
         while(i < index):
             current_node = current_node.next
             i += 1
@@ -200,6 +227,7 @@ class LinkedList:
         output_value = self._head.value
 
         self._head = self._head.next
+        self._head.prev = None
         self._size -= 1
 
         # Edge case, list is now empty
@@ -225,6 +253,7 @@ class LinkedList:
         output_value = self._tail.value
 
         self._tail = self._tail.prev
+        self._tail.next = None
         self._size -= 1
 
         return output_value
@@ -248,7 +277,7 @@ class LinkedList:
         # Error case: Index out of acceptable range
         if index < 0 or index >= self._size:
             raise RangeError("index out of range.")
-        
+
         # Edge case: Remove from front of list
         # Behave list pop_front()
         if (index == 0):
@@ -261,16 +290,16 @@ class LinkedList:
 
         i = 1
         current_node = self._head.next
-        
+
         while(i < index):
             current_node = current_node.next
             i += 1
 
         current_node.prev.next = current_node.next
         current_node.next.prev = current_node.prev
+        self._size -= 1
 
         return current_node.value
-
 
     def peek_front(self):
         """
@@ -281,7 +310,7 @@ class LinkedList:
 
         if (self._size == 0):
             return None
-        
+
         return self._head.value
 
     def peek_back(self):
@@ -292,9 +321,9 @@ class LinkedList:
         """
         if (self._size == 0):
             return None
-        
+
         return self._tail.value
-    
+
     def get(self, index=0):
         """
         Get the value of the node at the given index
@@ -318,11 +347,11 @@ class LinkedList:
 
         i = 0
         current_node = self._head
-        
+
         while(i < index):
             current_node = current_node.next
             i += 1
-        
+
         return current_node.value
 
     def set(self, value, index=0):
@@ -350,11 +379,11 @@ class LinkedList:
 
         i = 0
         current_node = self._head
-        
+
         while(i < index):
             current_node = current_node.next
             i += 1
-        
+
         current_node.value = value
 
     def size(self):
@@ -386,5 +415,6 @@ class LinkedList:
 
         while(current_node != None):
             output_list.append(current_node.value)
+            current_node = current_node.next
 
         return output_list
