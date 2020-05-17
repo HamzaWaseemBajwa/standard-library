@@ -1,6 +1,5 @@
 from Exceptions import RangeError
 
-
 class LinkedList:
     """
     Linked list implementation of the List interface
