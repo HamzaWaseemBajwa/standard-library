@@ -3,7 +3,14 @@ My implementations of the most common data structures and algorithms in differen
 
 # Supported Languages (Status)
 - Python (Work in progress...)
-- C++ (Work in progress...)
+- C++ (Planned)
 
-# Supported Data Structures
-- Linked List (Work in progress...)
+# Planned Data Structures (Languages)
+- Linked List (Python)
+- Stack (Python)
+
+# Data Structures (Planned)
+- Queue
+- Graph
+- Hash Table
+- Binary Search Tree
